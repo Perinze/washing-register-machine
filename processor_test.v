@@ -27,7 +27,7 @@ localparam op_set     = 8'h11;
 localparam op_dec     = 8'h12;
 localparam op_jz      = 8'h21;
 
-reg [15:0] instr = 16'd0;
+reg [31:0] instr = 32'd0;
 wire [7:0] pc;
 wire ctrl_fill;
 wire ctrl_release;
@@ -48,25 +48,25 @@ processor processor0 (
 
 initial begin
   #(2)
-  instr = {8'h20, op_fill};
+  instr = {16'h0020, 8'd0, op_fill};
   #(33)
-  instr = {8'h30, op_release};
+  instr = {16'h0030, 8'd0, op_release};
   #(49)
-  instr = {8'h40, op_forward};
+  instr = {16'h0040, 8'd0, op_forward};
   #(65)
-  instr = {8'h50, op_reverse};
+  instr = {16'h0050, 8'd0, op_reverse};
   #(81)
-  instr = {8'h60, op_wait};
+  instr = {16'h0060, 8'd0, op_wait};
   #(97)
-  instr = {8'hab, op_set};
+  instr = {16'h00ab, 8'd0, op_set};
   #(16)
-  instr = {8'h00, op_dec};
+  instr = {16'h0000, 8'd0, op_dec};
   #(16)
-  instr = {8'hcd, op_jz};
+  instr = {16'h00cd, 8'd0, op_jz};
   #(16)
-  instr = {8'h00, op_set};
+  instr = {16'h0000, 8'd0, op_set};
   #(16)
-  instr = {8'hef, op_jz};
+  instr = {16'h00ef, 8'd0, op_jz};
   #(16)
   $finish;
 end

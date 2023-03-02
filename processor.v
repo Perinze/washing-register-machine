@@ -1,7 +1,13 @@
-module processor (
-  input         ena,
-  input  [15:0] instr,
-  output  [7:0] pc,
+module processor # (
+  parameter OPCODE_WIDTH = 8,
+  parameter REG_WIDTH = 8,
+  parameter IMME_WIDTH = 16,
+  parameter INSTRS_WIDTH = 32,
+  parameter ADDR_WIDTH = 8
+) (
+  input                     ena,
+  input  [INSTRS_WIDTH-1:0] instr,
+  output   [ADDR_WIDTH-1:0] pc,
 
   output ctrl_fill,
   output ctrl_release,
@@ -44,10 +50,12 @@ assign op_is_jnz     = opcode == op_jnz;
 
 
 wire [7:0] opcode;
-wire [7:0] arg;
+wire [7:0] reg_id;
+wire [15:0] arg;
 
 assign opcode = instr[7:0];
-assign arg = instr[15:8];
+assign reg_id = instr[15:8];
+assign arg = instr[31:16];
 
 wire sleep;
 wire sleep_next;
@@ -77,8 +85,8 @@ dffr #(1) sleep_dff (
   .rst_n(rst_n)
 );
 
-wire [7:0] var;
-wire [7:0] var_next;
+wire [15:0] var;
+wire [15:0] var_next;
 
 assign ctrl_fill    = ~irq & op_is_fill;
 assign ctrl_release = ~irq & op_is_release;
@@ -87,11 +95,11 @@ assign ctrl_reverse = ~irq & op_is_reverse;
 
 assign var_keep = ~op_is_set & ~op_is_dec;
 assign var_next =
-    ({8{op_is_set}} & arg)
-  | ({8{op_is_dec}} & (var - 8'd1))
-  | ({8{var_keep }} & var);
+    ({16{op_is_set}} & arg)
+  | ({16{op_is_dec}} & (var - 16'd1))
+  | ({16{var_keep }} & var);
 
-dffr #(8) var_dff (
+dffr #(16) var_dff (
   .dnxt(var_next),
   .qout(var),
   .clk(clk),
@@ -106,8 +114,8 @@ wire jump;
 wire stay;
 
 assign jump =
-    (op_is_jz  & (var == 8'd0))
-  | (op_is_jnz & (var != 8'd0));
+    (op_is_jz  & (var == 16'd0))
+  | (op_is_jnz & (var != 16'd0));
 assign fetch =
     ( sleep_instr & irq)
   | (~sleep_instr & ~jump);
@@ -115,9 +123,9 @@ assign stay =
   ~jump & ~fetch;
 
 assign pc_next =
-    ({9{jump }} & arg)
-  | ({9{fetch}} & pc + 8'd1)
-  | ({9{stay }} & pc);
+    ({8{jump }} & arg)
+  | ({8{fetch}} & pc + 8'd1)
+  | ({8{stay }} & pc);
 
 dffr #(8) pc_dff (
   .dnxt(pc_next),
