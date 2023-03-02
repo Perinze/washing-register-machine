@@ -23,6 +23,7 @@ rom rom0 (
 
 processor processor0 (
   .ena(1'b1),
+  .start(start),
   .instr(instr),
   .pc(pc),
   .ctrl_fill(ctrl_fill),

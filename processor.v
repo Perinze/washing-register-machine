@@ -4,9 +4,11 @@ module processor # (
   parameter IMME_WIDTH = 16,
   parameter INSTRS_WIDTH = 32,
   parameter ADDR_WIDTH = 8,
-  parameter REG_NUM = 2
+  parameter REG_NUM = 2,
+  parameter BOOT_ADDR = 8'd2
 ) (
   input                     ena,
+  input                     start,
   input  [INSTRS_WIDTH-1:0] instr,
   output   [ADDR_WIDTH-1:0] pc,
 
@@ -39,6 +41,7 @@ wire op_is_forward;
 wire op_is_reverse;
 wire op_is_set;
 wire op_is_dec;
+wire op_is_j;
 wire op_is_jz;
 wire op_is_jnz;
 
@@ -50,6 +53,7 @@ assign op_is_forward = opcode == op_forward;
 assign op_is_reverse = opcode == op_reverse;
 assign op_is_set     = opcode == op_set;
 assign op_is_dec     = opcode == op_dec;
+assign op_is_j       = opcode == op_j;
 assign op_is_jz      = opcode == op_jz;
 assign op_is_jnz     = opcode == op_jnz;
 
@@ -129,16 +133,20 @@ wire stay;
 
 assign jump =
     (op_is_jz  & (var[reg_id] == 16'd0))
-  | (op_is_jnz & (var[reg_id] != 16'd0));
+  | (op_is_jnz & (var[reg_id] != 16'd0))
+  | op_is_j;
 assign fetch =
     ( sleep_instr & irq)
   | (~sleep_instr & ~jump & ~op_is_halt);
+assign boot =
+  op_is_halt & start;
 assign stay =
-  ~jump & ~fetch;
+  ~jump & ~fetch & ~boot;
 
 assign pc_next =
     ({8{jump }} & arg)
   | ({8{fetch}} & pc + 8'd1)
+  | ({8{boot }} & BOOT_ADDR)
   | ({8{stay }} & pc);
 
 dffr #(8) pc_dff (

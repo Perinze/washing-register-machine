@@ -65,6 +65,8 @@ initial begin
   // dry start
   mem[24] = {16'd0200, 8'd00, op_forward};
   // dry end
+  // back to addr 0
+  mem[25] = {16'd0000, 8'd00, op_j};
 end
 
 endmodule

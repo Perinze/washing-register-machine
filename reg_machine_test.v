@@ -18,7 +18,7 @@ initial begin
   #(2) rst_n <= 1'b1;
 end
 
-reg start;
+reg start = 1'd0;
 wire ctrl_fill;
 wire ctrl_release;
 wire ctrl_forward;
@@ -35,6 +35,8 @@ reg_machine reg_machine0 (
 );
 
 initial begin
+  #(128) start <= 1'd1;
+  #(2) start <= 1'd0;
   #(16384) $finish;
 end
 
