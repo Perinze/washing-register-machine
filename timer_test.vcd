@@ -1,0 +1,182 @@
+$date
+	Thu Mar  2 14:35:44 2023
+$end
+$version
+	Icarus Verilog
+$end
+$timescale
+	1ms
+$end
+$scope module timer_test $end
+$var wire 1 ! irq $end
+$var reg 1 " clk $end
+$var reg 1 # load $end
+$var reg 1 $ rst_n $end
+$var reg 8 % set [7:0] $end
+$scope module timer0 $end
+$var wire 1 " clk $end
+$var wire 9 & cnt_next [8:0] $end
+$var wire 9 ' cnt_next_or_load [8:0] $end
+$var wire 1 # load $end
+$var wire 1 $ rst_n $end
+$var wire 8 ( set [7:0] $end
+$var wire 1 ) sign $end
+$var wire 9 * set_ext [8:0] $end
+$var wire 1 ! irq $end
+$var wire 9 + cnt [8:0] $end
+$scope module timer_dff $end
+$var wire 1 " clk $end
+$var wire 9 , dnxt [8:0] $end
+$var wire 1 $ rst_n $end
+$var wire 9 - qout [8:0] $end
+$var reg 9 . qout_r [8:0] $end
+$scope begin DFFRS_PROC $end
+$upscope $end
+$upscope $end
+$upscope $end
+$upscope $end
+$enddefinitions $end
+#0
+$dumpvars
+b111111111 .
+b111111111 -
+b111111111 ,
+b111111111 +
+b0xxxxxxxx *
+1)
+bx (
+b111111111 '
+b111111111 &
+bx %
+0$
+0#
+0"
+0!
+$end
+#500
+1"
+#1000
+1$
+0"
+#1500
+1"
+#2000
+b111 *
+b111 %
+b111 (
+0"
+#2500
+1"
+#3000
+b111 '
+b111 ,
+1#
+0"
+#3500
+b110 &
+0)
+b111 +
+b111 -
+b111 .
+1"
+#4000
+b110 '
+b110 ,
+0#
+0"
+#4500
+b101 '
+b101 ,
+b101 &
+b110 +
+b110 -
+b110 .
+1"
+#5000
+0"
+#5500
+b100 '
+b100 ,
+b100 &
+b101 +
+b101 -
+b101 .
+1"
+#6000
+0"
+#6500
+b11 '
+b11 ,
+b11 &
+b100 +
+b100 -
+b100 .
+1"
+#7000
+0"
+#7500
+b10 '
+b10 ,
+b10 &
+b11 +
+b11 -
+b11 .
+1"
+#8000
+0"
+#8500
+b1 '
+b1 ,
+b1 &
+b10 +
+b10 -
+b10 .
+1"
+#9000
+0"
+#9500
+b0 '
+b0 ,
+b0 &
+b1 +
+b1 -
+b1 .
+1"
+#10000
+0"
+#10500
+b111111111 '
+b111111111 ,
+b111111111 &
+1!
+b0 +
+b0 -
+b0 .
+1"
+#11000
+0"
+#11500
+1)
+0!
+b111111111 +
+b111111111 -
+b111111111 .
+1"
+#12000
+0"
+#12500
+1"
+#13000
+0"
+#13500
+1"
+#14000
+0"
+#14500
+1"
+#15000
+0"
+#15500
+1"
+#16000
+0"
