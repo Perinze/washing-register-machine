@@ -1,7 +1,7 @@
 module rom # (
   parameter INSTRS_WIDTH = 32,
   parameter ADDR_WIDTH = 8,
-  parameter ROM_SIZE = 64
+  parameter ROM_SIZE = 32
 ) (
   input    [ADDR_WIDTH-1:0] pc,
   output [INSTRS_WIDTH-1:0] instr
