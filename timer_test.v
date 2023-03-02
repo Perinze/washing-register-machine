@@ -18,7 +18,7 @@ initial begin
   #(1) rst_n <= 1'b1;
 end
 
-reg [7:0] set;
+reg [15:0] set;
 reg       load = 1'b0;
 wire      irq;
 
@@ -32,7 +32,7 @@ timer timer0 (
 
 initial begin
   #(2)
-  set <= 8'd7;
+  set <= 16'd7;
   #(1)
   load <= 1'b1;
   #(1)

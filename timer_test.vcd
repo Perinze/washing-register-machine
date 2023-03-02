@@ -1,5 +1,5 @@
 $date
-	Thu Mar  2 14:35:44 2023
+	Thu Mar  2 18:43:40 2023
 $end
 $version
 	Icarus Verilog
@@ -12,24 +12,24 @@ $var wire 1 ! irq $end
 $var reg 1 " clk $end
 $var reg 1 # load $end
 $var reg 1 $ rst_n $end
-$var reg 8 % set [7:0] $end
+$var reg 16 % set [15:0] $end
 $scope module timer0 $end
 $var wire 1 " clk $end
-$var wire 9 & cnt_next [8:0] $end
-$var wire 9 ' cnt_next_or_load [8:0] $end
+$var wire 17 & cnt_next [16:0] $end
+$var wire 17 ' cnt_next_or_load [16:0] $end
 $var wire 1 # load $end
 $var wire 1 $ rst_n $end
-$var wire 8 ( set [7:0] $end
+$var wire 16 ( set [15:0] $end
 $var wire 1 ) sign $end
-$var wire 9 * set_ext [8:0] $end
+$var wire 17 * set_ext [16:0] $end
 $var wire 1 ! irq $end
-$var wire 9 + cnt [8:0] $end
+$var wire 17 + cnt [16:0] $end
 $scope module timer_dff $end
 $var wire 1 " clk $end
-$var wire 9 , dnxt [8:0] $end
+$var wire 17 , dnxt [16:0] $end
 $var wire 1 $ rst_n $end
-$var wire 9 - qout [8:0] $end
-$var reg 9 . qout_r [8:0] $end
+$var wire 17 - qout [16:0] $end
+$var reg 17 . qout_r [16:0] $end
 $scope begin DFFRS_PROC $end
 $upscope $end
 $upscope $end
@@ -38,15 +38,15 @@ $upscope $end
 $enddefinitions $end
 #0
 $dumpvars
-b111111111 .
-b111111111 -
-b111111111 ,
-b111111111 +
-b0xxxxxxxx *
+b11111111111111111 .
+b11111111111111111 -
+b11111111111111111 ,
+b11111111111111111 +
+b0xxxxxxxxxxxxxxxx *
 1)
 bx (
-b111111111 '
-b111111111 &
+b11111111111111111 '
+b11111111111111111 &
 bx %
 0$
 0#
@@ -145,9 +145,9 @@ b1 .
 #10000
 0"
 #10500
-b111111111 '
-b111111111 ,
-b111111111 &
+b11111111111111111 '
+b11111111111111111 ,
+b11111111111111111 &
 1!
 b0 +
 b0 -
@@ -158,9 +158,9 @@ b0 .
 #11500
 1)
 0!
-b111111111 +
-b111111111 -
-b111111111 .
+b11111111111111111 +
+b11111111111111111 -
+b11111111111111111 .
 1"
 #12000
 0"
