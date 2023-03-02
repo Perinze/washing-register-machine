@@ -1,9 +1,13 @@
-module rom (
-  input   [7:0] pc,
-  output [15:0] instr
+module rom # (
+  parameter INSTRS_WIDTH = 32,
+  parameter ADDR_WIDTH = 8,
+  parameter ROM_SIZE = 64
+) (
+  input    [ADDR_WIDTH-1:0] pc,
+  output [INSTRS_WIDTH-1:0] instr
 );
 
-reg [15:0] mem [0:64];
+reg [INSTRS_WIDTH-1:0] mem [0:ROM_SIZE-1];
 
 assign instr = mem[pc];
 
@@ -21,20 +25,20 @@ localparam op_jnz     = 8'h22;
 integer i;
 initial begin
   for (i = 0; i < 64; i++)
-    mem[i] = 16'h0000;
+    mem[i] = 32'h0000;
 
-  mem[02] = {8'd100, op_fill};
-  mem[03] = {8'd050, op_wait};
-  mem[04] = {8'd005, op_set};
+  mem[02] = {16'd100, 8'd00, op_fill};
+  mem[03] = {16'd050, 8'd00, op_wait};
+  mem[04] = {16'd005, 8'd00, op_set};
   // loop start
-  mem[05] = {8'd020, op_forward};
-  mem[06] = {8'd010, op_wait};
-  mem[07] = {8'd020, op_reverse};
-  mem[08] = {8'd010, op_wait};
-  mem[09] = {8'd000, op_dec};
-  mem[10] = {8'd005, op_jnz};
+  mem[05] = {16'd020, 8'd00, op_forward};
+  mem[06] = {16'd010, 8'd00, op_wait};
+  mem[07] = {16'd020, 8'd00, op_reverse};
+  mem[08] = {16'd010, 8'd00, op_wait};
+  mem[09] = {16'd000, 8'd00, op_dec};
+  mem[10] = {16'd005, 8'd00, op_jnz};
   // loop end
-  mem[11] = {8'd100, op_release};
+  mem[11] = {16'd100, 8'd00, op_release};
 end
 
 endmodule

@@ -7,7 +7,7 @@ initial begin
 end
 
 reg [7:0] pc;
-wire [15:0] instr;
+wire [31:0] instr;
 
 rom rom0 (
   .pc(pc),
