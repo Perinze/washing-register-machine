@@ -1,4 +1,4 @@
-`timescale 1ms/1ns
+`timescale 100ms/1ns
 module reg_machine_test;
 
 reg clk;
@@ -37,9 +37,9 @@ reg_machine reg_machine0 (
 initial begin
   #(128) start <= 1'd1;
   #(2) start <= 1'd0;
-  #(512) start <= 1'd1;
+  #(64) start <= 1'd1;
   #(2) start <= 1'd0;
-  #(16384) $finish;
+  #(4096) $finish;
 end
 
 endmodule
