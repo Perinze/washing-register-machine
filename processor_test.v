@@ -26,6 +26,7 @@ localparam op_reverse = 8'h05;
 localparam op_set     = 8'h11;
 localparam op_dec     = 8'h12;
 localparam op_jz      = 8'h21;
+localparam op_jnz     = 8'h22;
 
 reg [31:0] instr = 32'd0;
 wire [7:0] pc;
@@ -67,6 +68,12 @@ initial begin
   instr = {16'h0000, 8'd0, op_set};
   #(16)
   instr = {16'h00ef, 8'd0, op_jz};
+  #(16)
+  instr = {16'h00ea, 8'd1, op_set};
+  #(16)
+  instr = {16'h00fe, 8'd1, op_jz};
+  #(16)
+  instr = {16'h00fe, 8'd1, op_jnz};
   #(16)
   $finish;
 end

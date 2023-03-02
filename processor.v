@@ -3,7 +3,8 @@ module processor # (
   parameter REG_WIDTH = 8,
   parameter IMME_WIDTH = 16,
   parameter INSTRS_WIDTH = 32,
-  parameter ADDR_WIDTH = 8
+  parameter ADDR_WIDTH = 8,
+  parameter REG_NUM = 2
 ) (
   input                     ena,
   input  [INSTRS_WIDTH-1:0] instr,
@@ -85,26 +86,35 @@ dffr #(1) sleep_dff (
   .rst_n(rst_n)
 );
 
-wire [15:0] var;
-wire [15:0] var_next;
-
 assign ctrl_fill    = ~irq & op_is_fill;
 assign ctrl_release = ~irq & op_is_release;
 assign ctrl_forward = ~irq & op_is_forward;
 assign ctrl_reverse = ~irq & op_is_reverse;
 
-assign var_keep = ~op_is_set & ~op_is_dec;
-assign var_next =
-    ({16{op_is_set}} & arg)
-  | ({16{op_is_dec}} & (var - 16'd1))
-  | ({16{var_keep }} & var);
+wire [15:0] var [0:REG_NUM-1];
+wire [15:0] var_next [0:REG_NUM-1];
+wire var_set [0:REG_NUM-1];
+wire var_dec [0:REG_NUM-1];
+wire var_keep [0:REG_NUM-1];
 
-dffr #(16) var_dff (
-  .dnxt(var_next),
-  .qout(var),
-  .clk(clk),
-  .rst_n(rst_n)
-);
+genvar i;
+generate
+  for (i = 0; i < REG_NUM; i = i + 1) begin : var_loop
+    assign var_set[i] = (reg_id == i) & op_is_set;
+    assign var_dec[i] = (reg_id == i) & op_is_dec;
+    assign var_keep[i] = ~var_set[i] & ~var_dec[i];
+    assign var_next[i] =
+        ({16{ var_set[i]}} & arg)
+      | ({16{ var_dec[i]}} & (var[i] - 16'd1))
+      | ({16{var_keep[i]}} & var[i]);
+    dffr #(16) var_dff (
+      .dnxt(var_next[i]),
+      .qout(var[i]),
+      .clk(clk),
+      .rst_n(rst_n)
+    );
+  end
+endgenerate
 
 wire [7:0] pc;
 wire [7:0] pc_next;
@@ -114,8 +124,8 @@ wire jump;
 wire stay;
 
 assign jump =
-    (op_is_jz  & (var == 16'd0))
-  | (op_is_jnz & (var != 16'd0));
+    (op_is_jz  & (var[reg_id] == 16'd0))
+  | (op_is_jnz & (var[reg_id] != 16'd0));
 assign fetch =
     ( sleep_instr & irq)
   | (~sleep_instr & ~jump);
