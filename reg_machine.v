@@ -1,4 +1,7 @@
-module reg_machine (
+module reg_machine # (
+  parameter INSTRS_WIDTH = 32,
+  parameter ADDR_WIDTH = 8
+) (
   input start,
 
   output ctrl_fill,
@@ -10,8 +13,8 @@ module reg_machine (
   input rst_n
 );
 
-wire [7:0] pc;
-wire [15:0] instr;
+wire [ADDR_WIDTH-1:0] pc;
+wire [INSTRS_WIDTH-1:0] instr;
 
 rom rom0 (
   .pc(pc),
