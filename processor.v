@@ -4,8 +4,9 @@ module processor # (
   parameter IMME_WIDTH = 16,
   parameter INSTRS_WIDTH = 32,
   parameter ADDR_WIDTH = 8,
-  parameter REG_NUM = 2,
-  parameter BOOT_ADDR = 8'd2
+  parameter REG_NUM = 3,
+  parameter BOOT_ADDR = 8'd2,
+  parameter SIG_REG = 8'd2
 ) (
   input                     ena,
   input                     start,
@@ -16,6 +17,10 @@ module processor # (
   output ctrl_release,
   output ctrl_forward,
   output ctrl_reverse,
+  output sig_done,
+  output sig_clean,
+  output sig_rinse,
+  output sig_dry,
 
   input clk,
   input rst_n
@@ -166,5 +171,10 @@ timer timer0 (
   .clk(clk),
   .rst_n(rst_n)
 );
+
+assign sig_clean = var[SIG_REG] == 1;
+assign sig_rinse = var[SIG_REG] == 2;
+assign sig_dry   = var[SIG_REG] == 3;
+assign sig_done  = var[SIG_REG] == 4;
 
 endmodule

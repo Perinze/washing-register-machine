@@ -9,6 +9,11 @@ module reg_machine # (
   output ctrl_forward,
   output ctrl_reverse,
 
+  output sig_clean,
+  output sig_rinse,
+  output sig_dry,
+  output sig_done,
+
   input clk,
   input rst_n
 );
@@ -30,6 +35,10 @@ processor processor0 (
   .ctrl_release(ctrl_release),
   .ctrl_forward(ctrl_forward),
   .ctrl_reverse(ctrl_reverse),
+  .sig_clean(sig_clean),
+  .sig_rinse(sig_rinse),
+  .sig_dry(sig_dry),
+  .sig_done(sig_done),
   .clk(clk),
   .rst_n(rst_n)
 );

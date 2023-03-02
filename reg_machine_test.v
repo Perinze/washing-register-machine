@@ -23,6 +23,10 @@ wire ctrl_fill;
 wire ctrl_release;
 wire ctrl_forward;
 wire ctrl_reverse;
+wire sig_clean;
+wire sig_rinse;
+wire sig_dry;
+wire sig_done;
 
 reg_machine reg_machine0 (
   .start(start),
@@ -30,16 +34,22 @@ reg_machine reg_machine0 (
   .ctrl_release(ctrl_release),
   .ctrl_forward(ctrl_forward),
   .ctrl_reverse(ctrl_reverse),
+  .sig_clean(sig_clean),
+  .sig_rinse(sig_rinse),
+  .sig_dry(sig_dry),
+  .sig_done(sig_done),
   .clk(clk),
   .rst_n(rst_n)
 );
 
 initial begin
-  #(128) start <= 1'd1;
-  #(2) start <= 1'd0;
-  #(64) start <= 1'd1;
-  #(2) start <= 1'd0;
-  #(4096) $finish;
+  #(128) start <= 1'b1;
+  #(2) start <= 1'b0;
+  #(64) start <= 1'b1;
+  #(2) start <= 1'b0;
+  #(3072) rst_n <= 1'b0;
+  #(1) rst_n <= 1'b1;
+  #(1024) $finish;
 end
 
 endmodule

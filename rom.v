@@ -29,44 +29,47 @@ initial begin
     mem[i] = 32'h0000;
 
   // clean start
-  mem[02] = {16'd0100, 8'd00, op_fill};
-  mem[03] = {16'd0050, 8'd00, op_wait};
-  mem[04] = {16'd0005, 8'd00, op_set};
+  mem[02] = {16'd0001, 8'd02, op_set};
+  mem[03] = {16'd0100, 8'd00, op_fill};
+  mem[04] = {16'd0050, 8'd00, op_wait};
+  mem[05] = {16'd0005, 8'd00, op_set};
   // loop 0 start
-  mem[05] = {16'd0020, 8'd00, op_forward};
-  mem[06] = {16'd0010, 8'd00, op_wait};
-  mem[07] = {16'd0020, 8'd00, op_reverse};
-  mem[08] = {16'd0010, 8'd00, op_wait};
-  mem[09] = {16'd0000, 8'd00, op_dec};
-  mem[10] = {16'd0005, 8'd00, op_jnz};
+  mem[06] = {16'd0020, 8'd00, op_forward};
+  mem[07] = {16'd0010, 8'd00, op_wait};
+  mem[08] = {16'd0020, 8'd00, op_reverse};
+  mem[09] = {16'd0010, 8'd00, op_wait};
+  mem[10] = {16'd0000, 8'd00, op_dec};
+  mem[11] = {16'd0006, 8'd00, op_jnz};
   // loop 0 end
-  mem[11] = {16'd0100, 8'd00, op_release};
+  mem[12] = {16'd0100, 8'd00, op_release};
   // clean end
 
   // rinse start
-  mem[12] = {16'd0003, 8'd00, op_set};
+  mem[13] = {16'd0002, 8'd02, op_set};
+  mem[14] = {16'd0003, 8'd00, op_set};
   // loop 0 start
-  mem[13] = {16'd0100, 8'd00, op_fill};
-  mem[14] = {16'd0005, 8'd01, op_set};
+  mem[15] = {16'd0100, 8'd00, op_fill};
+  mem[16] = {16'd0005, 8'd01, op_set};
   // loop 1 start
-  mem[15] = {16'd0020, 8'd00, op_forward};
-  mem[16] = {16'd0010, 8'd00, op_wait};
-  mem[17] = {16'd0020, 8'd00, op_reverse};
+  mem[17] = {16'd0020, 8'd00, op_forward};
   mem[18] = {16'd0010, 8'd00, op_wait};
-  mem[19] = {16'd0000, 8'd01, op_dec};
-  mem[20] = {16'd0015, 8'd01, op_jnz};
+  mem[19] = {16'd0020, 8'd00, op_reverse};
+  mem[20] = {16'd0010, 8'd00, op_wait};
+  mem[21] = {16'd0000, 8'd01, op_dec};
+  mem[22] = {16'd0017, 8'd01, op_jnz};
   // loop 1 end
-  mem[21] = {16'd0100, 8'd00, op_release};
-  mem[22] = {16'd0000, 8'd00, op_dec};
-  mem[23] = {16'd0013, 8'd00, op_jnz};
+  mem[23] = {16'd0100, 8'd00, op_release};
+  mem[24] = {16'd0000, 8'd00, op_dec};
+  mem[25] = {16'd0015, 8'd00, op_jnz};
   // loop 0 end
   // rinse end
 
   // dry start
-  mem[24] = {16'd0200, 8'd00, op_forward};
+  mem[26] = {16'd0003, 8'd02, op_set};
+  mem[27] = {16'd0200, 8'd00, op_forward};
   // dry end
   // back to addr 0
-  mem[25] = {16'd0000, 8'd00, op_j};
+  mem[28] = {16'd0004, 8'd02, op_set};
 end
 
 endmodule
