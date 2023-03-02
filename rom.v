@@ -19,6 +19,7 @@ localparam op_forward = 8'h04;
 localparam op_reverse = 8'h05;
 localparam op_set     = 8'h11;
 localparam op_dec     = 8'h12;
+localparam op_j       = 8'h20;
 localparam op_jz      = 8'h21;
 localparam op_jnz     = 8'h22;
 
@@ -27,18 +28,43 @@ initial begin
   for (i = 0; i < 64; i++)
     mem[i] = 32'h0000;
 
-  mem[02] = {16'd100, 8'd00, op_fill};
-  mem[03] = {16'd050, 8'd00, op_wait};
-  mem[04] = {16'd005, 8'd00, op_set};
-  // loop start
-  mem[05] = {16'd020, 8'd00, op_forward};
-  mem[06] = {16'd010, 8'd00, op_wait};
-  mem[07] = {16'd020, 8'd00, op_reverse};
-  mem[08] = {16'd010, 8'd00, op_wait};
-  mem[09] = {16'd000, 8'd00, op_dec};
-  mem[10] = {16'd005, 8'd00, op_jnz};
-  // loop end
-  mem[11] = {16'd100, 8'd00, op_release};
+  // clean start
+  mem[02] = {16'd0100, 8'd00, op_fill};
+  mem[03] = {16'd0050, 8'd00, op_wait};
+  mem[04] = {16'd0005, 8'd00, op_set};
+  // loop 0 start
+  mem[05] = {16'd0020, 8'd00, op_forward};
+  mem[06] = {16'd0010, 8'd00, op_wait};
+  mem[07] = {16'd0020, 8'd00, op_reverse};
+  mem[08] = {16'd0010, 8'd00, op_wait};
+  mem[09] = {16'd0000, 8'd00, op_dec};
+  mem[10] = {16'd0005, 8'd00, op_jnz};
+  // loop 0 end
+  mem[11] = {16'd0100, 8'd00, op_release};
+  // clean end
+
+  // rinse start
+  mem[12] = {16'd0003, 8'd00, op_set};
+  // loop 0 start
+  mem[13] = {16'd0100, 8'd00, op_fill};
+  mem[14] = {16'd0005, 8'd01, op_set};
+  // loop 1 start
+  mem[15] = {16'd0020, 8'd00, op_forward};
+  mem[16] = {16'd0010, 8'd00, op_wait};
+  mem[17] = {16'd0020, 8'd00, op_reverse};
+  mem[18] = {16'd0010, 8'd00, op_wait};
+  mem[19] = {16'd0000, 8'd01, op_dec};
+  mem[20] = {16'd0015, 8'd01, op_jnz};
+  // loop 1 end
+  mem[21] = {16'd0100, 8'd00, op_release};
+  mem[22] = {16'd0000, 8'd00, op_dec};
+  mem[23] = {16'd0013, 8'd00, op_jnz};
+  // loop 0 end
+  // rinse end
+
+  // dry start
+  mem[24] = {16'd0200, 8'd00, op_forward};
+  // dry end
 end
 
 endmodule

@@ -26,6 +26,7 @@ localparam op_forward = 8'h04;
 localparam op_reverse = 8'h05;
 localparam op_set     = 8'h11;
 localparam op_dec     = 8'h12;
+localparam op_j       = 8'h20;
 localparam op_jz      = 8'h21;
 localparam op_jnz     = 8'h22;
 

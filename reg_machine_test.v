@@ -35,7 +35,7 @@ reg_machine reg_machine0 (
 );
 
 initial begin
-  #(1024) $finish;
+  #(16384) $finish;
 end
 
 endmodule
