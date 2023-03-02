@@ -18,6 +18,7 @@ initial begin
   #(2) rst_n <= 1'b1;
 end
 
+localparam op_halt    = 8'h00;
 localparam op_wait    = 8'h01;
 localparam op_fill    = 8'h02;
 localparam op_release = 8'h03;
@@ -25,6 +26,7 @@ localparam op_forward = 8'h04;
 localparam op_reverse = 8'h05;
 localparam op_set     = 8'h11;
 localparam op_dec     = 8'h12;
+localparam op_j       = 8'h20;
 localparam op_jz      = 8'h21;
 localparam op_jnz     = 8'h22;
 

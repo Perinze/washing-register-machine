@@ -19,17 +19,19 @@ module processor # (
   input rst_n
 );
 
-localparam op_wait    = 8'h01;
-localparam op_fill    = 8'h02;
-localparam op_release = 8'h03;
-localparam op_forward = 8'h04;
-localparam op_reverse = 8'h05;
-localparam op_set     = 8'h11;
-localparam op_dec     = 8'h12;
-localparam op_j       = 8'h20;
-localparam op_jz      = 8'h21;
-localparam op_jnz     = 8'h22;
+localparam op_halt    = 8'h00;
+localparam op_wait    = 8'h11;
+localparam op_fill    = 8'h12;
+localparam op_release = 8'h13;
+localparam op_forward = 8'h14;
+localparam op_reverse = 8'h15;
+localparam op_set     = 8'h21;
+localparam op_dec     = 8'h22;
+localparam op_j       = 8'h30;
+localparam op_jz      = 8'h31;
+localparam op_jnz     = 8'h32;
 
+wire op_is_halt;
 wire op_is_wait;
 wire op_is_fill;
 wire op_is_release;
@@ -40,6 +42,7 @@ wire op_is_dec;
 wire op_is_jz;
 wire op_is_jnz;
 
+assign op_is_halt    = opcode == op_halt;
 assign op_is_wait    = opcode == op_wait;
 assign op_is_fill    = opcode == op_fill;
 assign op_is_release = opcode == op_release;
@@ -67,7 +70,7 @@ wire active_exit_ena;
 wire keep_state;
 
 assign sleep_instr =
-  opcode[7:4] == 4'd0;
+  opcode[7:4] == 4'd1;
 assign active_exit_ena =
   (~sleep) & sleep_instr;
 assign sleep_exit_ena =
@@ -129,7 +132,7 @@ assign jump =
   | (op_is_jnz & (var[reg_id] != 16'd0));
 assign fetch =
     ( sleep_instr & irq)
-  | (~sleep_instr & ~jump);
+  | (~sleep_instr & ~jump & ~op_is_halt);
 assign stay =
   ~jump & ~fetch;
 
