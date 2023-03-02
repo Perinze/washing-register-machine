@@ -37,6 +37,8 @@ reg_machine reg_machine0 (
 initial begin
   #(128) start <= 1'd1;
   #(2) start <= 1'd0;
+  #(512) start <= 1'd1;
+  #(2) start <= 1'd0;
   #(16384) $finish;
 end
 
